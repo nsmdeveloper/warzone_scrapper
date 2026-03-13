@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 
-def scrape_wz_final():
+def scrape_wazone():
 
     with sync_playwright() as p:
 
@@ -168,4 +168,4 @@ def scrape_wz_final():
         print(f"Total armas guardadas: {len(armas_finales)}")
 
 
-scrape_wz_final()
+scrape_warzone()
