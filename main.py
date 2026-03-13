@@ -168,4 +168,4 @@ def scrape_wazone():
         print(f"Total armas guardadas: {len(armas_finales)}")
 
 
-scrape_warzone()
+scrape_wazone()
