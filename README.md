@@ -1,4 +1,4 @@
-# 🕷️ Web Scraping Tutorial with Python & Playwright
+# 🕷️ Tutorial de Web Scraping con Python & Playwright
 
 Este proyecto es una **herramienta educativa para aprender Web Scraping moderno** utilizando **Python + Playwright**.
 
