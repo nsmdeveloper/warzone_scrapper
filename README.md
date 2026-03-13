@@ -182,6 +182,196 @@ ARMA #1
 
 ---
 
+# 🌐 Visualización en la página HTML
+
+La página **index.html** carga los datos del scraper usando:
+
+```javascript
+fetch('data0.json')
+    .then(res => res.json())
+    .then(data => {
+        allData = data
+        initFilters()
+        render(allData)
+    })
+```
+
+Esto significa que:
+
+- el scraper genera **data.json**
+- el frontend usa **data0.json**
+
+Puedes:
+
+### Opción 1
+
+Renombrar automáticamente:
+
+```
+data.json → data0.json
+```
+
+### Opción 2
+
+Modificar el HTML:
+
+```javascript
+fetch('data.json')
+```
+
+---
+
+# 🧩 Funcionamiento de la página HTML
+
+La página muestra los datos en **cards visuales**.
+
+Cada arma muestra:
+
+- imagen
+- nombre
+- tier
+- primeros accesorios
+
+Código:
+
+```javascript
+function render(data) {
+    grid.innerHTML = ''
+
+    data.forEach((arma) => {
+
+        const card = document.createElement('div')
+
+        card.innerHTML = `
+        <img data-src="${arma.imagen}">
+        <h3>${arma.nombre}</h3>
+        <p>${arma.tier}</p>
+        `
+        
+        grid.appendChild(card)
+    })
+}
+```
+
+---
+
+# 🔎 Sistema de búsqueda
+
+El buscador permite filtrar armas:
+
+```javascript
+searchInput.addEventListener('input', applyFilters)
+```
+
+Filtra por:
+
+- nombre del arma
+- tier seleccionado
+
+---
+
+# 🎛 Sistema de filtros
+
+El filtro de tier se genera automáticamente:
+
+```javascript
+const tiers = [...new Set(allData.map(a => a.tier || 'N/A'))]
+```
+
+Esto crea opciones como:
+
+```
+S TIER
+A TIER
+B TIER
+```
+
+---
+
+# 🖼 Lazy Loading de imágenes
+
+Las imágenes se cargan solo cuando aparecen en pantalla.
+
+```javascript
+const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target
+            img.src = img.dataset.src
+        }
+    })
+})
+```
+
+Esto mejora el rendimiento.
+
+---
+
+# 🧾 Modal de detalles
+
+Al hacer click en una card se abre un **modal con información completa**.
+
+```javascript
+card.onclick = () => openModal(arma)
+```
+
+El modal muestra:
+
+- imagen grande
+- accesorios completos
+- código de build
+- fecha de actualización
+
+---
+
+# 🚀 Cómo usar el sistema completo
+
+Paso 1
+
+Ejecutar scraper
+
+```
+python3 main.py
+```
+
+Paso 2
+
+Verificar que existe:
+
+```
+data.json
+```
+
+Paso 3
+
+Mover o copiar:
+
+```
+data.json → data0.json
+```
+
+Paso 4
+
+Abrir la página:
+
+```
+index.html
+```
+
+---
+
+# 📊 Resultado
+
+La página mostrará:
+
+- grid de armas
+- buscador
+- filtro por tier
+- modal con accesorios
+- lazy loading de imágenes
+
+---
+
 # 🧠 Cómo funciona el scraper
 
 El scraper sigue estos pasos:
