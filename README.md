@@ -208,7 +208,42 @@ ARMA #1
 
 # 🌐 Visualización en la página HTML
 
-### Pagina que utiliza la data.json obtenida del scrapper: https://warzone.megaplus.com.do
+## 🌐 Página que utiliza la data del scraper
+
+La información obtenida por el scraper (`data.json`) es utilizada por la siguiente página web:
+
+### 🔗 Demo del proyecto
+https://warzone.megaplus.com.do
+
+Esta página muestra:
+
+- Loadouts de armas
+- Tier de cada arma
+- Accesorios
+- Código de build
+- Sistema de búsqueda
+- Filtros por tier
+
+Los datos provienen directamente del archivo generado por el scraper.
+
+---
+
+## 📊 Flujo completo del sistema
+
+```
+SCRAPER (Python + Playwright)
+        │
+        │ genera
+        ▼
+     data.json
+        │
+        │ consumido por
+        ▼
+Frontend HTML / JS
+        │
+        ▼
+https://warzone.megaplus.com.do
+```
 
 La página **index.html** carga los datos del scraper usando:
 
