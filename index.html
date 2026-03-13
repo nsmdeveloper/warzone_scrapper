@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARZONE RETRO-META</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0d0a12; background-image: radial-gradient(circle at 50% 50%, #1a1525 0%, #0a0b10 100%); color: #fff; font-family: 'Rajdhani', sans-serif; }
+        .retro-title { font-family: 'Orbitron', sans-serif; letter-spacing: 4px; text-shadow: 0 0 10px #0ff, 0 0 20px #f0f; }
+        .card-glitch { background: rgba(20, 22, 30, 0.9); border: 2px solid transparent; background-image: linear-gradient(rgba(20, 22, 30, 0.9), rgba(20, 22, 30, 0.9)), linear-gradient(to right, #0ff, #f0f); background-origin: border-box; background-clip: padding-box, border-box; }
+        
+        /* Estilo Retro para el Select */
+        .retro-select {
+            appearance: none;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #06b6d4; /* Cyan */
+            color: #22d3ee;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .retro-select:focus, .retro-select:hover {
+            border-color: #d946ef; /* Fuchsia */
+            box-shadow: 0 0 10px #d946ef;
+            outline: none;
+        }
+        /* Icono de flecha personalizado */
+        .select-container { position: relative; }
+        .select-container::after {
+            content: "▼";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #06b6d4;
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+
+        .lazy-img { transition: opacity 0.3s; }
+        .lazy-img.loaded { opacity: 1; }
+        dialog::backdrop { background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+    </style>
+</head>
+<body class="p-4 md:p-12">
+
+    <header class="text-center mb-10">
+        <h1 class="retro-title text-3xl md:text-6xl text-white mb-2">WARZONE RETRO-META</h1>
+    </header>
+
+    <div class="max-w-4xl mx-auto mb-8 flex flex-col md:flex-row gap-3">
+        <div class="select-container w-full md:w-48">
+            <select id="tierFilter" class="retro-select w-full p-4 uppercase font-bold text-sm tracking-widest">
+                <option value="TODOS">TIER: ALL</option>
+            </select>
+        </div>
+        <input type="text" id="searchInput" placeholder="🔍 BUSCAR ARMA..." class="flex-grow p-4 bg-black/50 border-2 border-cyan-500 text-white outline-none focus:shadow-[0_0_15px_#0ff] transition-all placeholder:text-cyan-900">
+    </div>
+
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto"></div>
+
+    <dialog id="modal" class="card-glitch p-6 md:p-8 w-11/12 max-w-2xl text-white rounded-none border-2 border-cyan-500">
+        <div id="modalContent" class="max-h-[70vh] overflow-y-auto pr-2"></div>
+        <button onclick="document.getElementById('modal').close()" class="mt-6 w-full py-3 bg-red-900/50 hover:bg-red-700 font-bold uppercase tracking-widest text-xs">Cerrar</button>
+    </dialog>
+
+    <script>
+        let allData = [];
+        const grid = document.getElementById('grid');
+        const searchInput = document.getElementById('searchInput');
+        const tierFilter = document.getElementById('tierFilter');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+
+        fetch('data.json')
+            .then(res => res.json())
+            .then(data => { allData = data; initFilters(); render(allData); });
+
+        function initFilters() {
+            const tiers = [...new Set(allData.map(a => a.tier || 'N/A'))];
+            tiers.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t; opt.textContent = t;
+                tierFilter.appendChild(opt);
+            });
+        }
+
+        function render(data) {
+            grid.innerHTML = '';
+            data.forEach((arma) => {
+                const card = document.createElement('div');
+                card.className = "card-glitch p-4 hover:scale-[1.02] transition-transform duration-300 cursor-pointer";
+                card.innerHTML = `
+                    <img data-src="${arma.imagen}" class="lazy-img w-full h-28 object-contain mb-3 opacity-0 bg-black/30">
+                    <h3 class="text-lg font-bold text-white uppercase truncate">${arma.nombre.split('\n')[0]}</h3>
+                    <p class="text-fuchsia-500 font-bold mb-2 text-xs">${arma.tier || 'TIER A'}</p>
+                    <ul class="space-y-0.5 text-[10px] text-cyan-100 font-mono mb-4">
+                        ${arma.accesorios.slice(0,2).map(a => `<li>> ${a}</li>`).join('')}
+                    </ul>
+                `;
+                card.onclick = () => openModal(arma);
+                grid.appendChild(card);
+            });
+            initLazyLoad();
+        }
+
+        function applyFilters() {
+            const term = searchInput.value.toLowerCase();
+            const selectedTier = tierFilter.value;
+            render(allData.filter(a => (selectedTier === "TODOS" || (a.tier || 'N/A') === selectedTier) && a.nombre.toLowerCase().includes(term)));
+        }
+
+        function openModal(arma) {
+            modalContent.innerHTML = `
+                <h2 class="retro-title text-2xl mb-4">${arma.nombre.split('\n')[0]}</h2>
+                <img src="${arma.imagen}" class="w-full h-48 object-contain mb-4">
+                <div class="grid grid-cols-2 gap-2 text-xs mb-4">
+                    <p class="text-cyan-400">Ranking: ${arma.tier}</p>
+                    <p class="text-cyan-400">UPDATED: ${arma.fecha_actualizacion}</p>
+                </div>
+                <p class="text-fuchsia-400 font-bold text-sm mb-2">ATTACHMENTS:</p>
+                <ul class="list-disc pl-4 text-gray-300 font-mono text-xs mb-6">
+                    ${arma.accesorios.map(a => `<li>${a}</li>`).join('')}
+                </ul>
+                <div class="p-3 bg-black/50 border border-cyan-500 text-center font-mono text-cyan-300 text-sm">
+                    CODE: ${arma.build_code}
+                </div>
+            `;
+            requestAnimationFrame(() => modalContent.scrollTop = 0);
+            modal.showModal();
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+        tierFilter.addEventListener('change', applyFilters);
+
+        function initLazyLoad() {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        obs.unobserve(img);
+                    }
+                });
+            });
+            document.querySelectorAll('.lazy-img').forEach(i => obs.observe(i));
+        }
+    </script>
+</body>
+</html>
