@@ -187,7 +187,7 @@ ARMA #1
 La página **index.html** carga los datos del scraper usando:
 
 ```javascript
-fetch('data0.json')
+fetch('data.json')
     .then(res => res.json())
     .then(data => {
         allData = data
