@@ -350,6 +350,6 @@ Proyecto educativo para aprendizaje de **Web Scraping con Python**.
 
 ---
 
-# 👨‍💻 Autor
+# 👨‍💻 Natanael Sanchez (nsmdeveloper)
 
 Proyecto creado como **ejemplo educativo de scraping dinámico con Playwright**.
