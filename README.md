@@ -213,7 +213,7 @@ ARMA #1
 La información obtenida por el scraper (`data.json`) es utilizada por la siguiente página web:
 
 ### 🔗 Demo del proyecto
-https://warzone.megaplus.com.do
+👉 **[Abrir Warzone Retro Meta](https://warzone.megaplus.com.do)**
 
 Esta página muestra:
 
