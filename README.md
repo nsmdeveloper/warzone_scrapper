@@ -371,14 +371,6 @@ data.json
 
 Paso 3
 
-Mover o copiar:
-
-```
-data.json → data0.json
-```
-
-Paso 4
-
 Abrir la página:
 
 ```
