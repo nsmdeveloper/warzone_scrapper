@@ -13,11 +13,10 @@ El objetivo del proyecto es **mostrar cómo funcionan los scrapers dinámicos**,
 # 📚 Contenido del proyecto
 
 ```
-project/
+warzone_scrapper/
 │
 ├── main.py
 ├── data.json
-├── backup/
 │
 └── README.md
 ```
