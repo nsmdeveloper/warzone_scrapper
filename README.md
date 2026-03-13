@@ -171,11 +171,36 @@ Iniciando scraping dinámico...
 
 ARMA #1
 {
- "nombre": "Peacekeeper Mk1",
- "tier": "S Tier",
- "rank": "#1",
- "categoria": "Long Range",
- "tipo": "Assault Rifle"
+     "nombre": "Peacekeeper Mk1\nBUFF",
+     "tier": "BLACK OPS ROYALE IS HERE!\n\nDiscover the Black Ops Royale meta, top loadouts and tier lists\n\nDISCOVER THE BLACK OPS ROYALE META",
+     "rank": "#1",
+     "categoria": "Long Range",
+     "tipo": "Assault Rifle",
+     "accesorios": [
+         "FANG HOVERPOINT ELO",
+         "MONOLITHIC SUPPRESSOR",
+         "25\" EAM HEAVY BARREL",
+         "BARRAGE EXTENDED MAG",
+         "MFS COUNTERFORCE-C1 STOCK",
+         "FANG HOVERPOINT ELO",
+         "REDWELL SHADE-X SUPPRESSOR",
+         "19.4\" STIMULUS BARREL",
+         "BARRAGE EXTENDED MAG",
+         "MFS COUNTERFORCE-C1 STOCK",
+         "FANG HOVERPOINT ELO",
+         "MONOLITHIC SUPPRESSOR",
+         "25\" EAM HEAVY BARREL",
+         "BARRAGE EXTENDED MAG",
+         "EAM BLITZFIRE STOCK",
+         "14.5\" E7-CUFF BARREL",
+         "EAM STEADY-90 GRIP",
+         "BARRAGE EXTENDED MAG",
+         "VAGRANT-93 STOCK",
+         "BOLT CARRIER GROUP"
+     ],
+     "build_code": "A06-34FBS-SSSNE-11",
+     "imagen": "https://img.wzstats.gg/peacekeeper-mk1_version4/gunDisplayLoadouts",
+     "fecha_actualizacion": "Mar 11, 2026"
 }
 ```
 
