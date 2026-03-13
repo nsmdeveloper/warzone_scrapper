@@ -208,7 +208,7 @@ ARMA #1
 
 # 🌐 Visualización en la página HTML
 
-## Pagina: https://warzone.megaplus.com.do
+### Pagina que utiliza la data.json obtenida del scrapper: https://warzone.megaplus.com.do
 
 La página **index.html** carga los datos del scraper usando:
 
