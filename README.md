@@ -223,7 +223,7 @@ fetch('data.json')
 Esto significa que:
 
 - el scraper genera **data.json**
-- el frontend usa **data0.json**
+- el frontend usa **data.json**
 
 Puedes:
 
@@ -308,6 +308,9 @@ Esto crea opciones como:
 S TIER
 A TIER
 B TIER
+C TIER
+D TIER
+...
 ```
 
 ---
